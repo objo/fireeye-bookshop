@@ -60,5 +60,29 @@ class TestInventory < Test::Unit::TestCase
     assert_equal expected_magazine_price, inventory.calculate_price(identifier)
   end
 
+  def test_find_returns_newspaper_objects
+    identifier = "1111"
+    base_price = "5.00"
+    
+    newspapers = [{identifier: identifier, base_price: base_price}]
+    inventory = Bookshop::Inventory.new(nil, nil, newspapers)
+    newspaper = inventory.find(identifier)
+    
+    assert_equal newspaper.class, Bookshop::Newspaper
+    assert_equal newspaper.base_price, newspaper.base_price
+    assert_equal newspaper.identifier, newspaper.identifier
+  end
+
+  def test_calculate_correctly_calculates_newspaper_price
+    identifier = "1111"
+    base_price = 1.20
+    
+    newspapers = [{identifier: identifier, base_price: base_price}]
+    inventory = Bookshop::Inventory.new(nil, nil, newspapers)
+
+    expected_newspaper_price = 2.1525
+
+    assert_equal expected_newspaper_price, inventory.calculate_price(identifier)
+  end
 
 end

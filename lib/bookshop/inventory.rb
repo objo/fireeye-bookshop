@@ -1,10 +1,11 @@
 module Bookshop
   class Inventory
 
-    def initialize(books, magazines, *args)
+    def initialize(books, magazines, newspapers)
       @inventory = {}
       add_books(books) if books
       add_magazines(magazines) if magazines
+      add_newspapers(newspapers) if newspapers
     end
 
     def calculate_price(identifier)
@@ -27,6 +28,11 @@ module Bookshop
     def add_magazines(magazine_array)
       magazine_array.each { |magazine| @inventory[magazine[:identifier]] = Magazine.new(magazine) }
     end
+
+    def add_newspapers(newspaper_array)
+      newspaper_array.each { |newspaper| @inventory[newspaper[:identifier]] = Newspaper.new(newspaper) }
+    end
+
   end
 
   module Item 
@@ -58,5 +64,13 @@ module Bookshop
       super(*args)
     end
   end
-  
+
+  class Newspaper
+    include Item
+    def initialize(*args)
+      @store_fee = 0.85
+      super(*args)
+    end
+  end
+
 end
