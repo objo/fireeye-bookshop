@@ -44,33 +44,23 @@ module Bookshop
     end
 
     def price
-      puts "Calling from #{self.class} based on store fee of #{@store_fee}"
-      (base_price + @store_fee) * 1.05
+      (base_price + (Object.const_get(self.class.to_s + '::STORE_FEE'))) * 1.05
     end
   end
 
   class Book
     include Item
-    def initialize(*args)
-      @store_fee = 4.75
-      super(*args)
-    end
+    STORE_FEE = 4.75
   end
 
   class Magazine
     include Item
-    def initialize(*args)
-      @store_fee = 1.35
-      super(*args)
-    end
+    STORE_FEE = 1.35
   end
 
   class Newspaper
     include Item
-    def initialize(*args)
-      @store_fee = 0.85
-      super(*args)
-    end
+    STORE_FEE = 0.85
   end
 
 end
