@@ -17,7 +17,27 @@ class TestInventory < Test::Unit::TestCase
     @inventory = Bookshop::Inventory.new(books, magazines, newspapers)
   end
 
-  def test_book_price2
+  def test_adding_books_to_inventory
+    books = [{identifier: "1111", base_price: 5.00}]
+    inventory = Bookshop::Inventory.new(books, nil, nil)
+
+    assert_equal 1, inventory.size
+  end
+
+  def test_find_returns_book_objects
+    identifier = "1111"
+    base_price = "5.00"
+    
+    books = [{identifier: identifier, base_price: base_price}]
+    inventory = Bookshop::Inventory.new(books, nil, nil)
+    book = inventory.find(identifier)
+    
+    assert_equal book.class, Bookshop::Book
+    assert_equal book.base_price, book.base_price
+    assert_equal book.identifier, book.identifier
+  end
+
+  def test_calculate_correctly_calculates_book_price
     expected_book_price = 15.4875
 
     assert_equal expected_book_price, @inventory.calculate_price(@book_identifier)
