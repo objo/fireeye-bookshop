@@ -29,9 +29,8 @@ module Bookshop
     end
   end
 
-  class Book
-    attr_accessor :identifier, :base_price
-    STORE_FEE = 4.75
+  module Item 
+    attr_accessor :identifier, :base_price, :store_fee
     
     def initialize(params)
       @identifier = params[:identifier]
@@ -39,23 +38,25 @@ module Bookshop
     end
 
     def price
-      (base_price + STORE_FEE) * 1.05
+      puts "Calling from #{self.class} based on store fee of #{@store_fee}"
+      (base_price + @store_fee) * 1.05
+    end
+  end
+
+  class Book
+    include Item
+    def initialize(*args)
+      @store_fee = 4.75
+      super(*args)
     end
   end
 
   class Magazine
-    attr_accessor :identifier, :base_price
-    STORE_FEE = 1.35
-    
-    def initialize(params)
-      @identifier = params[:identifier]
-      @base_price = params[:base_price].to_f
+    include Item
+    def initialize(*args)
+      @store_fee = 1.35
+      super(*args)
     end
-
-    def price
-      (base_price + STORE_FEE) * 1.05
-    end
-
   end
   
 end
