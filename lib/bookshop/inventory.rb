@@ -44,7 +44,12 @@ module Bookshop
     end
 
     def price
-      (base_price + (Object.const_get(self.class.to_s + '::STORE_FEE'))) * 1.05
+      (base_price + store_fee) * 1.05
+    end
+
+    private
+    def store_fee
+      Object.const_get(self.class.to_s + '::STORE_FEE')
     end
   end
 
